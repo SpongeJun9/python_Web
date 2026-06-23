@@ -58,10 +58,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var items = root.querySelectorAll(config.itemSelector);
     if (!items.length) return;
 
+    // 按钮可能在 root 内部，也可能在 root 的父级中
+    var buttonScope = config.buttonScope || root;
     var indicatorRoot = config.indicatorRoot || root;
     var indicators = indicatorRoot.querySelectorAll(config.indicatorSelector);
-    var prevBtn = root.querySelector(config.prevSelector || '.carousel-prev');
-    var nextBtn = root.querySelector(config.nextSelector || '.carousel-next');
+    var prevBtn = buttonScope.querySelector(config.prevSelector || '.carousel-prev');
+    var nextBtn = buttonScope.querySelector(config.nextSelector || '.carousel-next');
     var autoplay = Number(root.getAttribute('data-autoplay') || config.autoplay || 0);
     var current = 0;
     var timer;
@@ -114,6 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
       itemSelector: '.hero-carousel-item',
       indicatorSelector: '.hero-indicator',
       indicatorRoot: document.querySelector('.hero'),
+      buttonScope: document.querySelector('.hero'),
       prevSelector: '.hero-carousel-prev',
       nextSelector: '.hero-carousel-next',
       autoplay: 6500
