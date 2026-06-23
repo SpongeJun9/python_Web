@@ -76,33 +76,24 @@ DATABASES = {
 }
 
 # ============================
-# 如果 Volume 挂载了 /app/data，用那里的 SQLite（持久化）
+# 持久化：优先用 Volume 中的 SQLite，其次是 PostgreSQL
 # ============================
 import os as _os
-_DATA_DIR = _os.path.join(BASE_DIR, 'data')
-if _os.path.isdir(_DATA_DIR):
-    DATABASES['default']['NAME'] = _os.path.join(_DATA_DIR, 'db.sqlite3')
 
-# ============================
-# 如果有 DATABASE_URL 或 PGHOST，切换 PostgreSQL
-# ============================
+# Railway Volume 通常挂载到 /app/media，把数据库也放那里
+_MEDIA_DB = _os.path.join(BASE_DIR, 'media', 'db.sqlite3')
+if _os.path.isdir(_os.path.dirname(_MEDIA_DB)):
+    DATABASES['default']['NAME'] = _MEDIA_DB
+
 DATABASE_URL = _os.getenv('DATABASE_URL', '')
 PGHOST = _os.getenv('PGHOST', '')
-
 if DATABASE_URL or PGHOST:
     import dj_database_url
     if DATABASE_URL:
-        DATABASES['default'] = dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+        DATABASES['default'] = dj_database_url.config(default=DATABASE_URL, conn_max_age=600, conn_health_checks=True)
     elif PGHOST:
-        DATABASES['default'] = dj_database_url.config(
-            default=f"postgres://{_os.getenv('PGUSER')}:{_os.getenv('PGPASSWORD')}@{PGHOST}:{_os.getenv('PGPORT','5432')}/{_os.getenv('PGDATABASE')}",
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+        url = f"postgres://{_os.getenv('PGUSER')}:{_os.getenv('PGPASSWORD')}@{PGHOST}:{_os.getenv('PGPORT','5432')}/{_os.getenv('PGDATABASE')}"
+        DATABASES['default'] = dj_database_url.config(default=url, conn_max_age=600, conn_health_checks=True)
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
