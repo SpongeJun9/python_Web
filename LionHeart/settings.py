@@ -76,10 +76,18 @@ DATABASES = {
 }
 
 # ============================
-# 生产环境使用 PostgreSQL（优先检测 Railway 注入的环境变量）
+# 如果 Volume 挂载了 /app/data，用那里的 SQLite（持久化）
 # ============================
-DATABASE_URL = os.getenv('DATABASE_URL', '')
-PGHOST = os.getenv('PGHOST', '')
+import os as _os
+_DATA_DIR = _os.path.join(BASE_DIR, 'data')
+if _os.path.isdir(_DATA_DIR):
+    DATABASES['default']['NAME'] = _os.path.join(_DATA_DIR, 'db.sqlite3')
+
+# ============================
+# 如果有 DATABASE_URL 或 PGHOST，切换 PostgreSQL
+# ============================
+DATABASE_URL = _os.getenv('DATABASE_URL', '')
+PGHOST = _os.getenv('PGHOST', '')
 
 if DATABASE_URL or PGHOST:
     import dj_database_url
@@ -89,9 +97,9 @@ if DATABASE_URL or PGHOST:
             conn_max_age=600,
             conn_health_checks=True,
         )
-    else:
+    elif PGHOST:
         DATABASES['default'] = dj_database_url.config(
-            default=f"postgres://{os.getenv('PGUSER')}:{os.getenv('PGPASSWORD')}@{PGHOST}:{os.getenv('PGPORT','5432')}/{os.getenv('PGDATABASE')}",
+            default=f"postgres://{_os.getenv('PGUSER')}:{_os.getenv('PGPASSWORD')}@{PGHOST}:{_os.getenv('PGPORT','5432')}/{_os.getenv('PGDATABASE')}",
             conn_max_age=600,
             conn_health_checks=True,
         )
