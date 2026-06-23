@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}技术方向 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Technical Directions</p>
+    <h1>技术方向</h1>
+    <p>帮助新队员了解各方向的工作内容、常用工具和学习路径，也让老师、企业和访问者了解战队技术能力布局。</p>
+</section>
+
+<!-- 方向总览 -->
+<section class="section">
+    <div class="section-title">
+        <h2>六大技术方向</h2>
+        <span>LionHeart 围绕 RoboMaster 赛事和机器人创新实践，建立了六大方向协同作战的研发体系。</span>
+    </div>
+    <div class="card-grid two">
+        {% for item in directions %}
+        <article class="tech-card detail reveal">
+            <div class="icon">{{ item.icon }}</div>
+            <h2>{{ item.name }}</h2>
+            <p class="lead">{{ item.summary }}</p>
+            <dl>
+                <dt>🛠️ 常用工具</dt>
+                <dd>{{ item.tools }}</dd>
+                <dt>📖 学习路线</dt>
+                <dd>{{ item.route }}</dd>
+            </dl>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- 方向协作关系 -->
+<section class="section">
+    <div class="section-title">
+        <h2>方向协作关系</h2>
+        <span>机器人是系统工程，六大方向相互依赖、紧密配合。</span>
+    </div>
+    <div class="card-grid three">
+        <article class="tech-card reveal">
+            <h3>🔗 机械 ↔ 电控</h3>
+            <p>机械组设计的结构决定了电控组可以安装哪些电机和传感器；电控组的驱动需求反过来影响结构设计。底盘和云台是两个组协作最紧密的部分。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🔗 电控 ↔ 视觉</h3>
+            <p>视觉组识别到目标后，需要通过电控组的 CAN 总线将目标坐标发给云台电机执行瞄准。通信协议、数据格式和时序配合是关键。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🔗 视觉 ↔ 导航</h3>
+            <p>视觉组的目标检测和导航组的 SLAM 建图在传感器数据层面有大量共享（相机、激光雷达）。两个组在算法框架和部署平台上也有很多交集。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🔗 研发 ↔ 运营</h3>
+            <p>运营组将技术成果转化为推文、视频和海报，让外界了解战队实力；研发组提供技术素材和展示 demo。好的宣传离不开扎实的研发，好的研发也需要被看见。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🔗 研发 ↔ 项目管理</h3>
+            <p>项目组负责排期、跟踪和复盘，确保各方向进度透明、风险可控。技术组长专注于技术决策，项目组专注于流程保障。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🔗 战队 ↔ 招商外联</h3>
+            <p>招商组将战队的技术能力和发展规划传递给企业，争取资源支持；企业的技术需求和行业反馈反过来引导战队的技术方向选择。</p>
+        </article>
+    </div>
+</section>
+
+<!-- 技术成长阶段 -->
+<section class="section">
+    <div class="section-title">
+        <h2>技术成长路径</h2>
+        <span>从入队到独立研发，每位队员都会经历以下成长阶段。</span>
+    </div>
+    <div class="timeline wide">
+        <div class="timeline-item"><b>🌱 入门期（1-2 月）</b><span>学习方向基础工具和知识，在学长学姐指导下完成第一个入门小任务。目标：能用该方向的基础工具完成简单操作。</span></div>
+        <div class="timeline-item"><b>🌿 成长期（3-6 月）</b><span>参与战队实际项目，承担模块级开发任务。在真实机器人平台上验证所学。目标：能独立完成一个子模块的设计与实现。</span></div>
+        <div class="timeline-item"><b>🌳 进阶期（6-12 月）</b><span>负责子系统或整机级别的设计开发，开始指导新人。参与技术方案评审和跨方向协作。目标：能主导一个子系统的完整研发。</span></div>
+        <div class="timeline-item"><b>🏆 骨干期（1 年+）</b><span>担任方向组长或技术负责人，统筹方向技术路线、把关设计质量、推动技术传承。目标：带领团队完成机器人整机交付和比赛任务。</span></div>
+    </div>
+</section>
+{% endblock %}

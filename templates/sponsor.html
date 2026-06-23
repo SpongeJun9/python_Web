@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}合作赞助 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Sponsor & Partner</p>
+    <h1>合作赞助</h1>
+    <p>为企业合作、赛事赞助、校友支持和产学研共建提供正式的展示与合作页面。</p>
+</section>
+
+<!-- 合作价值 -->
+<section class="section split">
+    <div>
+        <h2>为什么支持我们？</h2>
+        <p class="lead">LionHeart 不仅是一支机器人战队，更是一个连接校园与产业界的工程人才培养平台。</p>
+        <ul class="check-list columns">
+            <li><b>品牌曝光：</b>战队官网、公众号、赛事现场、战队服装、机器人机身等多渠道品牌露出</li>
+            <li><b>人才直达：</b>战队成员来自机械、电子、计算机、自动化等多个工科专业，是优质的技术人才储备</li>
+            <li><b>技术共创：</b>可围绕机器人研发、视觉算法、嵌入式控制等方向开展联合技术项目</li>
+            <li><b>社会影响：</b>RoboMaster 赛事覆盖全国 400+ 高校，具有广泛的社会关注度和媒体影响力</li>
+        </ul>
+    </div>
+    <div class="data-panel">
+        <h3>赞助形式</h3>
+        <ul class="check-list">
+            <li>💰 资金赞助（研发经费、参赛经费）</li>
+            <li>🔧 设备赞助（电机、传感器、开发板等）</li>
+            <li>🖨️ 加工支持（CNC、3D 打印、PCB 制板）</li>
+            <li>💻 软件平台（设计软件 License、云服务）</li>
+            <li>🎓 技术指导（企业导师、技术讲座）</li>
+            <li>🏢 实习就业（校企人才对接通道）</li>
+            <li>📦 赛事物资（电池、耗材、队服等）</li>
+            <li>📣 传播资源（媒体推广、行业活动）</li>
+        </ul>
+    </div>
+</section>
+
+<!-- 赞助等级 -->
+<section class="section">
+    <div class="section-title">
+        <h2>合作等级</h2>
+        <span>根据合作深度和投入规模，提供差异化的权益回报。</span>
+    </div>
+    <div class="card-grid three">
+        <article class="tech-card reveal">
+            <div class="icon">🤝</div>
+            <h3>基础合作伙伴</h3>
+            <p>官网鸣谢栏展示、公众号感谢推文、招新活动现场展示。适合初次合作或小额支持。</p>
+            <ul class="check-list" style="margin-top: 0.5rem;">
+                <li>官网 Logo 展示</li>
+                <li>公众号鸣谢推文</li>
+                <li>招新活动鸣谢</li>
+            </ul>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">⭐</div>
+            <h3>标准合作伙伴</h3>
+            <p>战队服 Logo 展示、机器人机身贴纸、宣传视频鸣谢、校内活动联合露出。</p>
+            <ul class="check-list" style="margin-top: 0.5rem;">
+                <li>包含基础档全部权益</li>
+                <li>战队服装 Logo 展示</li>
+                <li>机器人机身贴纸</li>
+                <li>宣传视频联合露出</li>
+            </ul>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">🏆</div>
+            <h3>深度战略合作</h3>
+            <p>联合实验室命名展示、企业技术讲座、长期人才联合培养、赛事专题深度宣传。</p>
+            <ul class="check-list" style="margin-top: 0.5rem;">
+                <li>包含标准档全部权益</li>
+                <li>联合实验室品牌展示</li>
+                <li>企业技术讲座/工作坊</li>
+                <li>人才联合培养通道</li>
+                <li>赛事专题合作宣传</li>
+            </ul>
+        </article>
+    </div>
+</section>
+
+<!-- 合作伙伴展示 -->
+<section class="section">
+    <div class="section-title">
+        <h2>合作伙伴</h2>
+        <span>后台录入赞助方信息后会展示在这里。欢迎企业、校友、实验室与学院共同支持 LionHeart 建设。</span>
+    </div>
+    {% if sponsors %}
+    <div class="card-grid four">
+        {% for sponsor in sponsors %}
+        <article class="member-card">
+            {% if sponsor.logo %}<img src="{{ sponsor.logo.url }}" alt="{{ sponsor.company_name }}">{% endif %}
+            <h3>{{ sponsor.company_name }}</h3>
+            <p>{{ sponsor.cooperation_type }} · {{ sponsor.sponsor_level }}</p>
+            {% if sponsor.website_url %}
+            <a href="{{ sponsor.website_url }}" target="_blank" rel="noopener" style="color: var(--cyan); font-size: 0.85rem;">访问官网 →</a>
+            {% endif %}
+            <small>{{ sponsor.description }}</small>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p style="font-size: 1.1rem;">诚邀各界合作伙伴加入 LionHeart 生态</p>
+        <p style="color: var(--muted);">无论是资金、设备、技术还是平台支持，我们都期待与您携手共建。</p>
+        <a class="btn" href="{% url 'siteinfo:contact' %}" style="margin-top: 1rem;">联系我们</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

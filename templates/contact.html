@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}联系我们 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Contact</p>
+    <h1>联系我们</h1>
+    <p>欢迎同学、老师、企业、校友与机器人爱好者联系 LionHeart 机器人战队。</p>
+</section>
+
+<section class="section split">
+    <div class="data-panel">
+        <div class="contact-logo-wall">
+            <img src="{% static '队徽、校徽、R矢量图/学校校徽.png' %}" alt="重庆三峡科技大学校徽">
+            <img src="{% static '队徽、校徽、R矢量图/lionheart队徽.png' %}" alt="LionHeart 战队队徽">
+        </div>
+        <h2>战队基本信息</h2>
+        <div class="contact-info-list">
+            <div class="contact-info-item">
+                <strong>战队全称</strong>
+                <span>重庆三峡科技大学 LionHeart 机器人战队</span>
+            </div>
+            <div class="contact-info-item">
+                <strong>所属单位</strong>
+                <span>重庆三峡科技大学</span>
+            </div>
+            <div class="contact-info-item">
+                <strong>战队负责人</strong>
+                <span>包俊</span>
+            </div>
+            <div class="contact-info-item">
+                <strong>联系邮箱</strong>
+                <span>请在后台补充战队公共邮箱</span>
+            </div>
+            <div class="contact-info-item">
+                <strong>招新 QQ 群</strong>
+                <span>请补充战队招新 QQ 群号</span>
+            </div>
+            <div class="contact-info-item">
+                <strong>实验室地址</strong>
+                <span>重庆三峡科技大学相关实验室</span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>合作与加入</h2>
+        <p class="lead">如果你想加入战队、了解 RoboMaster 赛事、提供赞助支持，或希望共建实验室/竞赛项目，请通过以下渠道联系。</p>
+        <div class="hero-actions" style="margin-bottom: 2rem;">
+            <a class="btn primary" href="{% url 'recruitment:recruitment' %}">招新报名</a>
+            <a class="btn" href="{% url 'siteinfo:sponsor' %}">合作赞助</a>
+        </div>
+
+        <h3>各方向咨询</h3>
+        <div class="card-grid two" style="margin-top: 1rem;">
+            <div class="mini-card">
+                <strong>⚙ 机械结构</strong>
+                <p style="font-size: 0.9rem; color: var(--muted);">咨询 SolidWorks 建模、结构设计、加工工艺相关问题</p>
+            </div>
+            <div class="mini-card">
+                <strong>⌁ 嵌入式电控</strong>
+                <p style="font-size: 0.9rem; color: var(--muted);">咨询 STM32、电机驱动、PID 控制、CAN 通信相关问题</p>
+            </div>
+            <div class="mini-card">
+                <strong>◉ 算法视觉</strong>
+                <p style="font-size: 0.9rem; color: var(--muted);">咨询 OpenCV、目标检测、自动瞄准、模型部署相关问题</p>
+            </div>
+            <div class="mini-card">
+                <strong>⌖ 导航定位</strong>
+                <p style="font-size: 0.9rem; color: var(--muted);">咨询 ROS/ROS2、SLAM、路径规划、自主导航相关问题</p>
+            </div>
+            <div class="mini-card">
+                <strong>✦ 运营宣传</strong>
+                <p style="font-size: 0.9rem; color: var(--muted);">咨询新媒体运营、视觉设计、摄影摄像、视频制作</p>
+            </div>
+            <div class="mini-card">
+                <strong>💼 招商合作</strong>
+                <p style="font-size: 0.9rem; color: var(--muted);">咨询企业赞助、校企合作、设备支持、人才对接</p>
+            </div>
+        </div>
+
+        <h3 style="margin-top: 2rem;">关注我们</h3>
+        <p style="color: var(--muted);">微信公众号、B 站、GitHub 等官方账号将在后续开通并在此公布。敬请期待！</p>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}新闻动态 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">News</p>
+    <h1>新闻动态</h1>
+    <p>发布战队公告、训练记录、比赛记录、招新通知、技术分享和合作动态。</p>
+</section>
+
+<!-- 分类过滤和搜索 -->
+<section class="section" style="padding-top: 0;">
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; align-items: center;">
+        <a href="{% url 'content:news' %}" class="btn {% if not current_category %}btn-primary{% else %}btn-outline{% endif %}" style="padding: 0.5rem 1rem;">全部</a>
+        <a href="{% url 'content:news' %}?category=notice" class="btn {% if current_category == 'notice' %}btn-primary{% else %}btn-outline{% endif %}" style="padding: 0.5rem 1rem;">战队公告</a>
+        <a href="{% url 'content:news' %}?category=competition" class="btn {% if current_category == 'competition' %}btn-primary{% else %}btn-outline{% endif %}" style="padding: 0.5rem 1rem;">赛事动态</a>
+        <a href="{% url 'content:news' %}?category=training" class="btn {% if current_category == 'training' %}btn-primary{% else %}btn-outline{% endif %}" style="padding: 0.5rem 1rem;">训练记录</a>
+        <a href="{% url 'content:news' %}?category=tech" class="btn {% if current_category == 'tech' %}btn-primary{% else %}btn-outline{% endif %}" style="padding: 0.5rem 1rem;">技术文章</a>
+        <a href="{% url 'content:news' %}?category=recruit" class="btn {% if current_category == 'recruit' %}btn-primary{% else %}btn-outline{% endif %}" style="padding: 0.5rem 1rem;">招新信息</a>
+
+        <!-- 搜索框 -->
+        <form method="get" action="{% url 'content:news_search' %}" style="margin-left: auto; display: flex; gap: 0.5rem;">
+            <input type="text" name="keyword" placeholder="搜索新闻..." style="padding: 0.5rem; border: 1px solid var(--color-primary); border-radius: 4px; background: rgba(255,255,255,0.05); color: white;">
+            <button type="submit" class="btn btn-primary" style="padding: 0.5rem 1rem;">搜索</button>
+        </form>
+    </div>
+</section>
+
+<section class="section" style="padding-top: 0;">
+    <div class="news-list grid-news">
+        {% if articles %}
+            {% for article in articles %}
+            <a href="{% url 'content:news_detail' article.id %}">
+                {% if article.cover_image %}<img src="{{ article.cover_image.url }}" alt="{{ article.title }}">{% endif %}
+                <small>{{ article.get_category_display }} · {{ article.published_at|date:'Y-m-d' }} · {{ article.view_count }} 次阅读</small>
+                <strong>{{ article.title }}</strong>
+                <span>{{ article.summary|truncatechars:120 }}</span>
+            </a>
+            {% endfor %}
+        {% else %}
+            {% for article in default_news %}
+            <a href="{% url 'content:news_default_detail' article.slug %}">
+                <small>{{ article.category }} · {{ article.published_at }}</small>
+                <strong>{{ article.title }}</strong>
+                <span>{{ article.summary }}</span>
+            </a>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- 分页 -->
+    {% if articles.has_other_pages %}
+    <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 3rem;">
+        {% if articles.has_previous %}
+            <a href="?page=1{% if current_category %}&category={{ current_category }}{% endif %}" class="btn btn-outline" style="padding: 0.5rem 1rem;">首页</a>
+            <a href="?page={{ articles.previous_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}" class="btn btn-outline" style="padding: 0.5rem 1rem;">上一页</a>
+        {% endif %}
+
+        <span style="padding: 0.5rem 1rem; color: var(--color-primary);">第 {{ articles.number }} / {{ articles.paginator.num_pages }} 页</span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}{% if current_category %}&category={{ current_category }}{% endif %}" class="btn btn-outline" style="padding: 0.5rem 1rem;">下一页</a>
+            <a href="?page={{ articles.paginator.num_pages }}{% if current_category %}&category={{ current_category }}{% endif %}" class="btn btn-outline" style="padding: 0.5rem 1rem;">末页</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

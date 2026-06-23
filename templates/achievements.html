@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}赛事成果 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Achievements</p>
+    <h1>赛事成果</h1>
+    <p>展示竞赛荣誉、项目成果与战队建设历程，记录 LionHeart 每一步成长，增强团队可信度和影响力。</p>
+</section>
+
+<!-- 成果展示 -->
+<section class="section">
+    <div class="section-title">
+        <h2>获奖与成果</h2>
+        <span>后台录入真实竞赛数据后会展示在这里。当前显示战队建设里程碑。</span>
+    </div>
+    {% if achievements %}
+    <div class="card-grid three">
+        {% for item in achievements %}
+        <article class="project-card">
+            {% if item.certificate_image %}<img src="{{ item.certificate_image.url }}" alt="{{ item.competition_name }}">{% endif %}
+            <h2>{{ item.competition_name }}</h2>
+            <span>{{ item.award_level }} · {{ item.award_time|date:'Y-m-d' }}</span>
+            <p><b>项目：</b>{{ item.project_name }}</p>
+            <p>{{ item.description }}</p>
+            <small>成员：{{ item.members }}　指导老师：{{ item.teacher }}</small>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="timeline wide">
+        {% for item in default_achievements %}
+        <div class="timeline-item">
+            <b>{{ item.year }}</b>
+            <span><strong>{{ item.title }}</strong> —— {{ item.summary }}</span>
+        </div>
+        {% endfor %}
+    </div>
+    <div style="margin-top: 1.5rem; text-align: center;">
+        <p style="color: var(--muted);">以上为战队建设里程碑。随着赛事参与，这里将记录更多真实的竞赛荣誉。</p>
+    </div>
+    {% endif %}
+</section>
+
+<!-- 项目成果方向 -->
+<section class="section">
+    <div class="section-title">
+        <h2>项目与技术成果方向</h2>
+        <span>战队在各个技术方向上持续产出可展示的项目成果。</span>
+    </div>
+    <div class="card-grid three">
+        <article class="tech-card reveal">
+            <h3>🤖 机器人整机项目</h3>
+            <p>步兵、英雄、工程、哨兵等整机从设计到实物的完整交付，包含三维模型、加工图纸、装配文件和测试报告。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🎯 自动瞄准系统</h3>
+            <p>基于 OpenCV 的装甲板检测、PnP 位姿解算和卡尔曼滤波预测算法，实现从识别到射击的完整视觉闭环。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🗺️ ROS 导航系统</h3>
+            <p>基于 Cartographer SLAM 和 Nav2 的自主导航方案，支持激光雷达建图、路径规划和动态避障。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>🔧 机械创新设计</h3>
+            <p>机械臂、夹爪、发射机构等子系统的创新设计，兼顾功能实现、加工可行性和轻量化要求。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>💡 创新创业项目</h3>
+            <p>基于战队技术积累孵化的大学生创新创业训练计划项目、"互联网+"、"挑战杯"等参赛作品。</p>
+        </article>
+        <article class="tech-card reveal">
+            <h3>📚 技术文档与开源</h3>
+            <p>研发过程的技术文档、调试记录、设计规范和开源代码，沉淀为可传承的团队知识资产。</p>
+        </article>
+    </div>
+</section>
+
+<!-- 未来目标 -->
+<section class="section cta-band reveal" style="text-align: center;">
+    <p class="eyebrow">Future Goals</p>
+    <h2>这些位置，等待你来填满</h2>
+    <p>每一块奖牌、每一张证书、每一项成果的背后，都是队员日复一日的努力。加入 LionHeart，让你的名字也出现在这里。</p>
+    <a class="btn primary" href="{% url 'recruitment:recruitment' %}">加入我们</a>
+</section>
+{% endblock %}

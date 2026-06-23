@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block title %}招新报名 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Recruitment</p>
+    <h1>加入 LionHeart</h1>
+    <p>无论你是零基础还是已有项目经验，只要愿意学习、愿意动手、愿意和团队一起成长，都可以加入我们。</p>
+</section>
+
+<!-- 报名流程 -->
+<section class="section split">
+    <div>
+        <h2>报名流程</h2>
+        <div class="timeline">
+            <div class="timeline-item"><b>01</b><span>填写报名表，提交基本信息</span></div>
+            <div class="timeline-item"><b>02</b><span>加入招新 QQ 群，接收通知</span></div>
+            <div class="timeline-item"><b>03</b><span>参加线下/线上方向介绍会</span></div>
+            <div class="timeline-item"><b>04</b><span>完成入门小任务（学长学姐指导）</span></div>
+            <div class="timeline-item"><b>05</b><span>双向沟通确认，正式入队</span></div>
+        </div>
+    </div>
+    <div class="data-panel">
+        <h3>可报名方向</h3>
+        <div class="pill-row compact">
+            <span>⚙ 机械结构组</span>
+            <span>⌁ 嵌入式电控组</span>
+            <span>◉ 算法视觉组</span>
+            <span>⌖ 导航定位组</span>
+            <span>✦ 运营宣传组</span>
+            <span>💼 招商外联组</span>
+            <span>▣ 项目管理组</span>
+            <span>❓ 暂不确定</span>
+        </div>
+        <h3 style="margin-top: 1.2rem;">我们期待这样的你</h3>
+        <ul class="check-list">
+            <li>对机器人技术或团队运营有真实兴趣</li>
+            <li>愿意投入时间学习和动手实践</li>
+            <li>能和团队一起面对挑战、一起成长</li>
+            <li>不因「我不会」而退缩，因「我想学」而出发</li>
+        </ul>
+    </div>
+</section>
+
+<!-- 各方向简介 -->
+<section class="section">
+    <div class="section-title">
+        <h2>方向简介</h2>
+        <span>了解每个方向做什么、学什么，帮助做出适合自己的选择。</span>
+    </div>
+    <div class="card-grid three">
+        <article class="tech-card reveal">
+            <div class="icon">⚙</div>
+            <h3>机械结构组</h3>
+            <p>负责机器人整机结构设计、底盘、云台、发射机构、机械臂等。从三维建模到加工装配，把设计图纸变成真实的钢铁战士。</p>
+            <small style="color: var(--cyan);">需要：空间想象力、动手能力、对机械结构的兴趣</small>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">⌁</div>
+            <h3>嵌入式电控组</h3>
+            <p>负责 STM32 嵌入式开发、电机驱动、CAN 通信、PID 控制和底盘运动解算。让机器人听懂指令、精准执行。</p>
+            <small style="color: var(--cyan);">需要：C 语言基础或愿意学、对硬件和控制的兴趣</small>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">◉</div>
+            <h3>算法视觉组</h3>
+            <p>负责装甲板检测、目标跟踪、自动瞄准、弹道补偿等算法开发与部署。让机器人拥有"眼睛"和"大脑"。</p>
+            <small style="color: var(--cyan);">需要：Python/C++ 基础或愿意学、对 AI 和图像处理的兴趣</small>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">⌖</div>
+            <h3>导航定位组</h3>
+            <p>负责激光 SLAM、路径规划、ROS/ROS2 开发和哨兵自主导航。让机器人在战场上自主巡航、智能决策。</p>
+            <small style="color: var(--cyan);">需要：Linux 基础或愿意学、对自动导航和 ROS 的兴趣</small>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">✦</div>
+            <h3>运营宣传组</h3>
+            <p>负责官网运营、公众号推文、海报设计、摄影摄像、视频剪辑和新媒体品牌建设。让更多人看到战队的故事。</p>
+            <small style="color: var(--cyan);">需要：审美能力、文字功底、对新媒体运营的兴趣</small>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">💼</div>
+            <h3>招商外联组</h3>
+            <p>负责企业合作洽谈、赞助方案制定、校友联络和对外交流。为战队争取资源，搭建与产业界的桥梁。</p>
+            <small style="color: var(--cyan);">需要：沟通能力、商务思维、对外联工作的兴趣</small>
+        </article>
+    </div>
+</section>
+
+<!-- 报名表单 -->
+<section class="section">
+    <div class="section-title">
+        <h2>填写报名表</h2>
+        <span>认真填写以下信息，我们会认真阅读每一份报名。</span>
+    </div>
+    <form class="apply-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-grid">
+            {% for field in form %}
+            <label class="{% if field.name == 'skills' or field.name == 'experience' or field.name == 'reason' %}span-2{% endif %}">
+                <span>{{ field.label }}{% if field.field.required %}<em>*</em>{% endif %}</span>
+                {{ field }}
+                {% if field.errors %}<small class="form-error">{{ field.errors|striptags }}</small>{% endif %}
+            </label>
+            {% endfor %}
+        </div>
+        <button class="btn primary" type="submit">提交报名</button>
+    </form>
+</section>
+
+<!-- 常见问题 -->
+{% if faq %}
+<section class="section">
+    <div class="section-title">
+        <h2>常见问题</h2>
+        <span>关于招新和战队的常见疑问解答。</span>
+    </div>
+    <div class="card-grid two">
+        {% for item in faq %}
+        <article class="tech-card reveal">
+            <h3>Q: {{ item.q }}</h3>
+            <p style="color: var(--muted);">{{ item.a }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %}机器人详情 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Robot Detail</p>
+    {% if robot %}
+        <h1>{{ robot.name }}</h1>
+        <p>{{ robot.robot_type }} · {{ robot.progress }}</p>
+    {% else %}
+        <h1>{{ default_robot.name }}</h1>
+        <p>{{ default_robot.type }} · {{ default_robot.progress }}</p>
+    {% endif %}
+</section>
+
+<!-- 图片展示区域 -->
+{% if robot and images %}
+<section class="section">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        {% for img in images %}
+        <div style="position: relative; border-radius: 8px; overflow: hidden; border: 1px solid rgba(18, 199, 216, 0.3);">
+            <img src="{{ img.photo.url }}" alt="{{ img.description|default:robot.name }}" style="width: 100%; height: 250px; object-fit: cover;">
+            {% if img.description %}
+            <div style="padding: 0.5rem; background: rgba(0,0,0,0.7); color: white; font-size: 0.9rem;">
+                {{ img.description }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="section split">
+    <div>
+        {% if robot and robot.cover_image %}
+        <img class="detail-img" src="{{ robot.cover_image.url }}" alt="{{ robot.name }}" style="border-radius: 12px; border: 1px solid var(--line); margin-bottom: 1.5rem;">
+        {% endif %}
+        <h2>功能定位</h2>
+        <p class="lead">{% if robot %}{{ robot.description }}{% else %}{{ default_robot.summary }}{% endif %}</p>
+
+        {% if robot %}
+            {% if robot.hardware_config %}
+            <h3>🔧 硬件配置</h3>
+            <div class="data-panel" style="margin-bottom: 1rem;"><p>{{ robot.hardware_config|linebreaks }}</p></div>
+            {% endif %}
+            {% if robot.software_config %}
+            <h3>💻 软件配置</h3>
+            <div class="data-panel" style="margin-bottom: 1rem;"><p>{{ robot.software_config|linebreaks }}</p></div>
+            {% endif %}
+            {% if robot.video_url %}
+            <a class="btn" href="{{ robot.video_url }}" target="_blank" rel="noopener">📹 查看演示视频</a>
+            {% endif %}
+        {% else %}
+            {% if default_robot.hardware %}
+            <h3>🔧 典型硬件配置</h3>
+            <div class="data-panel" style="margin-bottom: 1rem;"><p>{{ default_robot.hardware }}</p></div>
+            {% endif %}
+            {% if default_robot.software %}
+            <h3>💻 软件技术栈</h3>
+            <div class="data-panel" style="margin-bottom: 1rem;"><p>{{ default_robot.software }}</p></div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <aside class="data-panel">
+        <h3>技术模块</h3>
+        <ul class="check-list">
+            {% if robot %}
+                {% for feature in robot.feature_list %}
+                <li>{{ feature }}</li>
+                {% empty %}
+                <li>后台可继续补充技术特点</li>
+                {% endfor %}
+            {% else %}
+                {% for feature in default_robot.features %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+
+        <h3 style="margin-top: 1.5rem;">研发阶段</h3>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+            <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                <div style="height: 100%; width: {% if robot %}{% if '规划' in robot.progress %}15%{% elif '预研' in robot.progress %}30%{% elif '设计' in robot.progress %}50%{% elif '调试' in robot.progress %}70%{% elif '完成' in robot.progress %}90%{% else %}40%{% endif %}{% else %}{% if '规划' in default_robot.progress %}15%{% elif '预研' in default_robot.progress %}30%{% elif '设计' in default_robot.progress %}50%{% elif '调试' in default_robot.progress %}70%{% elif '完成' in default_robot.progress %}90%{% else %}40%{% endif %}{% endif %}; background: var(--cyan); border-radius: 3px;"></div>
+            </div>
+            <span style="font-size: 0.85rem; color: var(--cyan); white-space: nowrap;">{% if robot %}{{ robot.progress }}{% else %}{{ default_robot.progress }}{% endif %}</span>
+        </div>
+
+        <h3 style="margin-top: 1.5rem;">相关链接</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+            <a class="btn" href="{% url 'content:robots' %}" style="text-align: center;">← 返回机器人阵容</a>
+            {% if robot and robot.video_url %}
+            <a class="btn" href="{{ robot.video_url }}" target="_blank" rel="noopener" style="text-align: center;">📹 演示视频</a>
+            {% endif %}
+        </div>
+    </aside>
+</section>
+{% endblock %}

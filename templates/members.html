@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}成员组织 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Members</p>
+    <h1>成员组织</h1>
+    <p>展示组织架构与方向分工，帮助新队员了解加入后可选择的位置。</p>
+</section>
+<section class="section split">
+    <div>
+        <h2>组织架构</h2>
+        <div class="org-box">
+            {% for item in organization %}
+            <div class="org-item">
+                <strong>{{ item.name }}</strong>
+                <small>{{ item.desc }}</small>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="data-panel">
+        <h3>成员权限设计</h3>
+        <ul class="check-list">
+            <li><b>普通成员：</b>浏览成员资料与内部资源，参与方向组日常训练和项目</li>
+            <li><b>方向组长：</b>管理组内训练任务，上传技术文章，审核组内项目</li>
+            <li><b>战队负责人：</b>统筹成员管理、文章发布、招新审核、成果归档</li>
+            <li><b>管理员：</b>拥有 Django 后台全部权限，管理网站所有内容</li>
+        </ul>
+        <h3 style="margin-top: 1.5rem;">团队规模目标</h3>
+        <p style="color: var(--muted);">第一阶段目标 20-30 人，包含机械 4-6 人、电控 4-6 人、视觉 3-5 人、导航 2-4 人、运营 3-5 人、项目管理 2-3 人。后续根据项目需求逐步扩展。</p>
+    </div>
+</section>
+<section class="section">
+    <div class="section-title"><h2>成员展示</h2><span>后台录入成员后会显示在这里。</span></div>
+    {% if members %}
+    <div class="card-grid four">
+        {% for member in members %}
+        <article class="member-card">
+            {% if member.avatar %}<img src="{{ member.avatar.url }}" alt="{{ member.name }}">{% endif %}
+            <h3>{{ member.name }}</h3>
+            <p>{{ member.group_name }} · {{ member.position }}</p>
+            <span>{{ member.college }} {{ member.major }} {{ member.grade }}</span>
+            <small>{{ member.description }}</small>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">暂无后台成员数据。可进入 Django Admin 添加真实成员信息。</div>
+    {% endif %}
+</section>
+{% endblock %}

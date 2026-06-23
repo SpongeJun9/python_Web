@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}机器人阵容 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Robots</p>
+    <h1>机器人阵容</h1>
+    <p>展示战队已完成、正在研发和规划研发的机器人平台。</p>
+</section>
+<section class="section">
+    <div class="card-grid three">
+        {% if robots %}
+            {% for robot in robots %}
+            <article class="project-card big">
+                {% if robot.cover_image %}<img src="{{ robot.cover_image.url }}" alt="{{ robot.name }}">{% endif %}
+                <h2>{{ robot.name }}</h2>
+                <span>{{ robot.robot_type }} · {{ robot.progress }}</span>
+                <p>{{ robot.description|truncatechars:130 }}</p>
+                <a href="{% url 'content:robot_detail' robot.id %}">查看详情</a>
+            </article>
+            {% endfor %}
+        {% else %}
+            {% for robot in default_robots %}
+            <article class="project-card big">
+                <h2>{{ robot.name }}</h2>
+                <span>{{ robot.type }} · {{ robot.progress }}</span>
+                <p>{{ robot.summary }}</p>
+                <a href="{% url 'content:robot_default_detail' robot.slug %}">查看详情</a>
+            </article>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

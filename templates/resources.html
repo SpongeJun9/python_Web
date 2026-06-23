@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}资源中心 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Resources</p>
+    <h1>资源中心</h1>
+    <p>提供学习路线、技术文档、开源资料和工具清单，支撑战队长期技术沉淀与知识传承。</p>
+</section>
+
+<!-- 资源分类说明 -->
+<section class="section">
+    <div class="section-title">
+        <h2>资源分类</h2>
+        <span>按权限等级分为三类，确保资料安全的同时促进知识共享。</span>
+    </div>
+    <div class="card-grid three">
+        <article class="tech-card reveal">
+            <div class="icon">🌐</div>
+            <h3>公开资料</h3>
+            <p>对所有访问者开放，包括战队介绍、赛事规则、入门学习建议和开源方案精选。帮助外界了解战队和 RoboMaster 赛事。</p>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">👥</div>
+            <h3>成员资料</h3>
+            <p>对战队正式成员开放，包含各方向学习路线、代码模板、标注数据集、仿真模型和培训课程。是队员日常学习和研发的核心参考。</p>
+        </article>
+        <article class="tech-card reveal">
+            <div class="icon">🔒</div>
+            <h3>内部资料</h3>
+            <p>仅对核心成员和组长开放，包含项目管理规范、设计源文件、竞赛策略文档和对外合作方案。涉及战队核心资产和敏感信息。</p>
+        </article>
+    </div>
+</section>
+
+<!-- 资源列表 -->
+<section class="section">
+    <div class="section-title">
+        <h2>资料清单</h2>
+        <span>以下资源将在后台逐步上传和更新。队员可通过后台管理上传新资源。</span>
+    </div>
+    <div class="card-grid three">
+        {% if resources %}
+            {% for item in resources %}
+            <article class="project-card">
+                <h2>{{ item.title }}</h2>
+                <span>{{ item.category }} · <span style="color: {% if item.permission_level == 'public' %}var(--cyan){% elif item.permission_level == 'member' %}var(--gold){% else %}var(--red){% endif %};">{{ item.get_permission_level_display }}</span></span>
+                <p>{{ item.description }}</p>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                    {% if item.file_url %}<a class="btn" href="{{ item.file_url.url }}" style="padding: 0.3rem 0.8rem; font-size: 0.85rem;">📥 下载资源</a>{% endif %}
+                    {% if item.external_url %}<a class="btn" href="{{ item.external_url }}" target="_blank" rel="noopener" style="padding: 0.3rem 0.8rem; font-size: 0.85rem;">🔗 打开链接</a>{% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            {% for item in default_resources %}
+            <article class="project-card">
+                <h2>{{ item.title }}</h2>
+                <span>{{ item.category }} · <span style="color: {% if item.permission == '公开资料' %}var(--cyan){% elif item.permission == '成员资料' %}var(--gold){% else %}var(--red){% endif %};">{{ item.permission }}</span></span>
+                <p>{{ item.summary }}</p>
+            </article>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- 学习路径建议 -->
+<section class="section">
+    <div class="section-title">
+        <h2>新人学习路径建议</h2>
+        <span>不知道从哪开始？这里有一条通用的入门路线。</span>
+    </div>
+    <div class="timeline wide">
+        <div class="timeline-item"><b>Week 1</b><span>了解战队和 RoboMaster 赛事 → 选择意向方向 → 安装基础开发工具（IDE、建模软件、Python 等）</span></div>
+        <div class="timeline-item"><b>Week 2-3</b><span>学习方向基础技能（机械学 SolidWorks 草图、电控学 GPIO 点灯、视觉学 OpenCV 读图）</span></div>
+        <div class="timeline-item"><b>Week 4-6</b><span>完成第一个入门小项目（设计一个零件、让电机转起来、识别一种颜色）</span></div>
+        <div class="timeline-item"><b>Week 7+</b><span>参与战队实际项目，从"学习模式"切换到"工程模式"，在真实机器人上验证所学</span></div>
+    </div>
+</section>
+{% endblock %}

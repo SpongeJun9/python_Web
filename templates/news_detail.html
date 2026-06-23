@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}新闻详情 - LionHeart{% endblock %}
+{% block content %}
+<article class="article-page section">
+    {% if article %}
+    <p class="eyebrow">{{ article.get_category_display }} · {{ article.published_at|date:'Y-m-d' }}</p>
+    <h1>{{ article.title }}</h1>
+    <p class="lead">{{ article.summary }}</p>
+    {% if article.cover_image %}<img class="detail-img" src="{{ article.cover_image.url }}" alt="{{ article.title }}">{% endif %}
+    <div class="article-content">{{ article.content|linebreaks }}</div>
+    <p class="muted">作者：{{ article.author }}　阅读：{{ article.view_count }}</p>
+    {% else %}
+    <p class="eyebrow">{{ default_article.category }} · {{ default_article.published_at }}</p>
+    <h1>{{ default_article.title }}</h1>
+    <p class="lead">{{ default_article.summary }}</p>
+    <div class="article-content"><p>{{ default_article.content }}</p></div>
+    {% endif %}
+</article>
+{% endblock %}

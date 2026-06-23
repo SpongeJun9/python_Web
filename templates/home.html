@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}首页 - LionHeart 机器人战队{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-bg-carousel" data-carousel data-autoplay="6500">
+        {% if carousels %}
+            {% for carousel in carousels %}
+            <div class="hero-carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{{ carousel.image.url }}" alt="{{ carousel.title|default:'LionHeart 机器人战队' }}">
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="hero-carousel-item active">
+                <img src="{% static '轮播图/1.jpg' %}" alt="LionHeart 机器人战队">
+            </div>
+            <div class="hero-carousel-item">
+                <img src="{% static '轮播图/41e172e986e8667a731edd47a00b3481.jpg' %}" alt="机器人训练现场">
+            </div>
+            <div class="hero-carousel-item">
+                <img src="{% static '轮播图/45154848b13081124ce923d8094a57f5.png' %}" alt="RoboMaster 视觉背景">
+            </div>
+            <div class="hero-carousel-item">
+                <img src="{% static '轮播图/73be840f84823a8c4e88e163f50afb7b.jpeg' %}" alt="战队建设">
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- 轮播图左右切换按钮 -->
+    <button class="hero-carousel-prev" aria-label="上一张">‹</button>
+    <button class="hero-carousel-next" aria-label="下一张">›</button>
+
+    <div class="hero-copy reveal">
+        <div class="hero-kicker">Robot Combat Lab</div>
+        <h1>{{ team_name|safe }}</h1>
+        <p class="hero-slogan">{{ slogan }}</p>
+        <p class="hero-desc">{{ sub_slogan }}</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="{% url 'recruitment:recruitment' %}">加入 LionHeart</a>
+            <a class="btn" href="{% url 'content:robots' %}">查看机器人阵容</a>
+            <a class="btn ghost" href="{% url 'siteinfo:robomaster' %}">了解 RoboMaster</a>
+        </div>
+        <div class="hero-stats">
+            <span><b>6+</b>研发与运营方向</span>
+            <span><b>RM</b>核心赛事赛道</span>
+            <span><b>2026</b>体系化建设启动</span>
+        </div>
+    </div>
+
+    <aside class="hero-panel reveal">
+        <div class="rm-logo-card">
+            <img src="{% static '队徽、校徽、R矢量图/R标/白/RM英文字@4x.png' %}" alt="RoboMaster">
+            
+        </div>
+        <ul class="signal-list">
+            <li><b>Mission</b><span>以竞赛牵引真实工程能力，从图纸、代码到整机上场。</span></li>
+            <li><b>Build</b><span>机械、电控、视觉、导航、运营多方向并行迭代。</span></li>
+            <li><b>Culture</b><span>热爱、实干、协作、传承，让每一次调试都留下沉淀。</span></li>
+        </ul>
+        <div class="hero-indicators">
+            {% if carousels %}
+                {% for carousel in carousels %}
+                <span class="hero-indicator {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}"></span>
+                {% endfor %}
+            {% else %}
+                <span class="hero-indicator active" data-slide="0"></span>
+                <span class="hero-indicator" data-slide="1"></span>
+                <span class="hero-indicator" data-slide="2"></span>
+                <span class="hero-indicator" data-slide="3"></span>
+            {% endif %}
+        </div>
+    </aside>
+</section>
+
+<div class="feature-strip reveal">
+    <a href="{% url 'siteinfo:technical' %}">
+        <small>Engineering</small>
+        <strong>技术方向</strong>
+        <span>机械 / 电控 / 视觉 / 导航协同研发</span>
+    </a>
+    <a href="{% url 'content:robots' %}">
+        <small>Robots</small>
+        <strong>机器人项目</strong>
+        <span>步兵、英雄、工程、哨兵与训练平台</span>
+    </a>
+    <a href="{% url 'content:news' %}">
+        <small>Newsroom</small>
+        <strong>新闻动态</strong>
+        <span>公告、训练、比赛、技术文章持续发布</span>
+    </a>
+    <a href="{% url 'siteinfo:sponsor' %}">
+        <small>Partner</small>
+        <strong>合作赞助</strong>
+        <span>校企共建、品牌露出与赛事支持</span>
+    </a>
+</div>
+
+<section class="section">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Core Directions</p>
+            <h2>面向赛场的研发分工</h2>
+        </div>
+        <span>参考 RoboMaster 官网的模块化信息呈现，把战队能力拆成清晰入口：访客能快速理解，队员也能快速找到自己的方向。</span>
+    </div>
+    <div class="card-grid six">
+        {% for item in directions %}
+        <article class="tech-card reveal">
+            <div class="icon">{{ item.icon }}</div>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.summary }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section split">
+    <div class="reveal">
+        <p class="eyebrow">About LionHeart</p>
+        <h2>把课堂知识拽进真实机器里</h2>
+        <p class="lead">LionHeart 机器人战队由机械、计算机、电子、自动化、软件、新媒体等方向同学组成，围绕 RoboMaster 机甲大师赛与机器人创新实践开展整机设计、视觉识别、导航定位、嵌入式控制、赛事运营等工作。</p>
+        <p>我们更看重“动手把东西做出来”的过程：建模、画板、写代码、调 PID、跑测试、复盘，再进入下一轮迭代。</p>
+        <div class="hero-actions">
+            <a class="btn primary" href="{% url 'siteinfo:about' %}">查看战队介绍</a>
+            <a class="btn" href="{% url 'siteinfo:members' %}">成员组织</a>
+        </div>
+    </div>
+    <div class="media-tile reveal">
+        <img src="{% static '队徽、校徽、R矢量图/合照.jpg' %}" alt="LionHeart 战队合照">
+        <div class="media-tile-content">
+            <p class="eyebrow">Team Photo</p>
+            <h3>重庆三峡科技大学 LionHeart</h3>
+            <p>从实验室到赛场，让机器人真正跑起来。</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-title">
+        <div>
+            <p class="eyebrow">Robot Fleet</p>
+            <h2>机器人项目矩阵</h2>
+        </div>
+        <a class="text-link" href="{% url 'content:robots' %}">全部机器人 →</a>
+    </div>
+    <div class="card-grid four">
+        {% if robots %}
+            {% for robot in robots %}
+            <article class="project-card reveal">
+                {% if robot.cover_image %}<img src="{{ robot.cover_image.url }}" alt="{{ robot.name }}">{% endif %}
+                <h3>{{ robot.name }}</h3>
+                <span>{{ robot.progress }}</span>
+                <p>{{ robot.description|truncatechars:92 }}</p>
+                <a href="{% url 'content:robot_detail' robot.id %}">查看详情</a>
+            </article>
+            {% endfor %}
+        {% else %}
+            {% for robot in default_robots %}
+            <article class="project-card reveal">
+                <h3>{{ robot.name }}</h3>
+                <span>{{ robot.progress }}</span>
+                <p>{{ robot.summary }}</p>
+                <a href="{% url 'content:robot_default_detail' robot.slug %}">查看详情</a>
+            </article>
+            {% endfor %}
+        {% endif %}
+    </div>
+</section>
+
+<section class="section split">
+    <div class="reveal">
+        <p class="eyebrow">Achievements</p>
+        <h2>建设时间轴</h2>
+        <div class="timeline">
+            {% if achievements %}
+                {% for item in achievements %}
+                <div class="timeline-item">
+                    <b>{{ item.award_time|date:'Y'|default:'成果' }}</b>
+                    <span>{{ item.competition_name }} · {{ item.award_level }}</span>
+                </div>
+                {% endfor %}
+            {% else %}
+                {% for item in default_achievements %}
+                <div class="timeline-item">
+                    <b>{{ item.year }}</b>
+                    <span>{{ item.title }}：{{ item.summary }}</span>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="reveal">
+        <p class="eyebrow">News</p>
+        <h2>最新动态</h2>
+        <div class="news-list">
+            {% if articles %}
+                {% for article in articles %}
+                <a href="{% url 'content:news_detail' article.id %}">
+                    <small>{{ article.get_category_display }} · {{ article.published_at|date:'Y-m-d' }}</small>
+                    <strong>{{ article.title }}</strong>
+                    <span>{{ article.summary|truncatechars:74 }}</span>
+                </a>
+                {% endfor %}
+            {% else %}
+                {% for article in default_news %}
+                <a href="{% url 'content:news_default_detail' article.slug %}">
+                    <small>{{ article.category }} · {{ article.published_at }}</small>
+                    <strong>{{ article.title }}</strong>
+                    <span>{{ article.summary }}</span>
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-title center">
+        <p class="eyebrow">Applications Adapted</p>
+        <h2>现有应用入口统一适配</h2>
+        <span>siteinfoApp、contentApp、recruitmentApp 的页面都保留原路由与后台数据，首页负责把这些应用收束成一个清晰的官网门户。</span>
+    </div>
+    <div class="card-grid three">
+        <article class="mini-card reveal">
+            <h3>内容展示应用</h3>
+            <p>机器人阵容、赛事成果、新闻动态继续使用 contentApp 数据模型和详情页。</p>
+        </article>
+        <article class="mini-card reveal">
+            <h3>站点信息应用</h3>
+            <p>关于战队、RoboMaster、技术方向、成员、赞助、资料、联系统一为深色赛事风格。</p>
+        </article>
+        <article class="mini-card reveal">
+            <h3>招新报名应用</h3>
+            <p>招新表单保留 ModelForm 与后台管理能力，视觉上融入统一按钮、表单和流程卡片。</p>
+        </article>
+    </div>
+</section>
+
+<section class="cta-band reveal">
+    <p class="eyebrow">Join the team</p>
+    <h2>让热爱成为战斗力</h2>
+    <p>无论你来自计算机、机械、电子、自动化、车辆、软件，还是对宣传、运营、摄影、剪辑、招商感兴趣，都可以在 LionHeart 找到自己的位置。</p>
+    <a class="btn primary" href="{% url 'recruitment:recruitment' %}">立即报名</a>
+</section>
+{% endblock %}

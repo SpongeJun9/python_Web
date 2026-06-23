@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}关于战队 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">About LionHeart</p>
+    <h1>关于战队</h1>
+    <p>系统介绍 LionHeart 的成立背景、使命愿景、发展规划与团队文化。</p>
+</section>
+
+<!-- 关于战队全宽轮播图 -->
+<section class="section" style="padding-bottom: 0;">
+    <div class="about-carousel" style="position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 28px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); background: #05080d;">
+        <div class="about-carousel-inner" style="position: relative; width: 100%; height: 100%;">
+            {% if carousels %}
+                {% for item in carousels %}
+                <div class="about-carousel-item {% if forloop.first %}active{% endif %}" style="position: absolute; width: 100%; height: 100%; opacity: {% if forloop.first %}1{% else %}0{% endif %}; transition: opacity 0.8s ease; top: 0; left: 0;">
+                    <img src="{{ item.image.url }}" alt="{{ item.title }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    {% if item.title or item.subtitle %}
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 3rem; background: linear-gradient(to top, rgba(0,0,0,0.75), transparent); z-index: 2;">
+                        {% if item.title %}<h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.6rem;">{{ item.title }}</h3>{% endif %}
+                        {% if item.subtitle %}<p style="color: rgba(255,255,255,0.85); margin: 0; font-size: 1.1rem;">{{ item.subtitle }}</p>{% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <!-- 默认轮播图 -->
+                <div class="about-carousel-item active" style="position: absolute; width: 100%; height: 100%; opacity: 1; top: 0; left: 0;">
+                    <img src="{% static '队徽、校徽、R矢量图/合照.jpg' %}" alt="LionHeart 战队合照" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 3rem; background: linear-gradient(to top, rgba(0,0,0,0.75), transparent); z-index: 2;">
+                        <h3 style="color: white; margin: 0 0 0.5rem 0; font-size: 1.6rem;">LionHeart 机器人战队</h3>
+                        <p style="color: rgba(255,255,255,0.85); margin: 0; font-size: 1.1rem;">重庆三峡科技大学 · 以工程点燃热爱</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- 轮播指示器 -->
+        <div class="about-carousel-indicators" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 15;">
+            {% if carousels %}
+                {% for item in carousels %}
+                <span class="about-indicator {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter0 }}" style="width: 12px; height: 12px; border-radius: 50%; background: white; cursor: pointer; opacity: {% if forloop.first %}1{% else %}0.5{% endif %}; transition: opacity 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.5);"></span>
+                {% endfor %}
+            {% else %}
+                <span class="about-indicator active" data-slide="0" style="width: 12px; height: 12px; border-radius: 50%; background: white; cursor: pointer; opacity: 1; transition: opacity 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.5);"></span>
+            {% endif %}
+        </div>
+
+        <!-- 左右箭头 -->
+        <button class="about-carousel-prev" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.55); color: white; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; font-size: 26px; z-index: 15; backdrop-filter: blur(10px); transition: background 0.3s; box-shadow: 0 2px 12px rgba(0,0,0,0.4);">‹</button>
+        <button class="about-carousel-next" style="position: absolute; right: 18px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.55); color: white; border: none; width: 48px; height: 48px; border-radius: 50%; cursor: pointer; font-size: 26px; z-index: 15; backdrop-filter: blur(10px); transition: background 0.3s; box-shadow: 0 2px 12px rgba(0,0,0,0.4);">›</button>
+    </div>
+</section>
+
+<section class="section split">
+    <div>
+        <h2>战队简介</h2>
+        <p class="lead">重庆三峡科技大学 LionHeart 机器人战队是一支面向机器人竞赛、工程实践与科技创新的学生团队。战队以 RoboMaster 机甲大师赛为重要建设方向，围绕机器人机械结构、嵌入式控制、机器视觉、自动瞄准、导航定位、赛事运营等方向开展研发训练。</p>
+        <h3>战队使命</h3>
+        <p>以机器人竞赛为牵引，推动学生将课堂知识转化为真实工程能力，建设具有持续研发能力、技术传承能力和赛事竞争力的校园机器人战队。</p>
+        <h3>战队愿景</h3>
+        <p>成为重庆三峡科技大学具有代表性的学生机器人创新团队，在 RoboMaster 赛事、机器人创新设计、智能制造实践和校企合作中持续成长。</p>
+    </div>
+    <aside class="data-panel">
+        <h3>战队负责人</h3>
+        {% if leader %}
+        <p><b>{{ leader.name }}</b></p>
+        {% if leader.college %}<p>学院：{{ leader.college }}</p>{% endif %}
+        {% if leader.major %}<p>专业：{{ leader.major }}</p>{% endif %}
+        {% if leader.group_name %}<p>方向组：{{ leader.group_name }}</p>{% endif %}
+        {% if leader.description %}<p>{{ leader.description }}</p>{% endif %}
+        {% else %}
+        <p><b>包俊</b></p>
+        <p>专业：信息管理与信息系统</p>
+        <p>方向：战队管理、项目统筹、机器人技术学习、赛事组织、招商合作。</p>
+        {% endif %}
+    </aside>
+</section>
+<section class="section">
+    <div class="section-title">
+        <h2>战队价值观</h2>
+        <span>这六个词定义了 LionHeart 的文化底色，也是我们选择队员和合作伙伴的标准。</span>
+    </div>
+    <div class="card-grid three">
+        {% for value in values %}
+        <article class="tech-card reveal">
+            <h3>{{ value.name }}</h3>
+            <p>{{ value.desc }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+<script>
+// 关于战队轮播图
+document.addEventListener('DOMContentLoaded', function() {
+    var carousel = document.querySelector('.about-carousel');
+    if (!carousel) return;
+    var items = carousel.querySelectorAll('.about-carousel-item');
+    if (items.length <= 1) return;
+
+    var indicators = carousel.querySelectorAll('.about-indicator');
+    var prevBtn = carousel.querySelector('.about-carousel-prev');
+    var nextBtn = carousel.querySelector('.about-carousel-next');
+    var current = 0;
+    var timer;
+
+    function show(i) {
+        items.forEach(function(item, idx) { item.style.opacity = idx === i ? '1' : '0'; });
+        indicators.forEach(function(dot, idx) { dot.style.opacity = idx === i ? '1' : '0.5'; });
+        current = i;
+    }
+    function next() { show((current + 1) % items.length); }
+    function prev() { show((current - 1 + items.length) % items.length); }
+    function start() { timer = setInterval(next, 5000); }
+    function stop() { clearInterval(timer); }
+
+    if (nextBtn) { nextBtn.addEventListener('click', function() { stop(); next(); start(); }); }
+    if (prevBtn) { prevBtn.addEventListener('click', function() { stop(); prev(); start(); }); }
+    indicators.forEach(function(dot, idx) {
+        dot.addEventListener('click', function() { stop(); show(idx); start(); });
+    });
+    start();
+});
+</script>

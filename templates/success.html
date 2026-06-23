@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}提交成功 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section center">
+    <p class="eyebrow">Success ✓</p>
+    <h1>报名已成功提交！</h1>
+    <p class="lead">感谢你对 LionHeart 机器人战队的信任与选择！</p>
+</section>
+
+<section class="section" style="max-width: 700px; margin: 0 auto;">
+    <div class="data-panel" style="text-align: center; padding: 2rem;">
+        <h3>接下来会发生什么？</h3>
+        <div class="timeline" style="text-align: left;">
+            <div class="timeline-item"><b>1-3 天内</b><span>负责人会查看你的报名信息，请保持手机/QQ 畅通。</span></div>
+            <div class="timeline-item"><b>加入招新群</b><span>通过初筛后会收到招新 QQ 群号，加入后可以认识其他新同学。</span></div>
+            <div class="timeline-item"><b>方向介绍会</b><span>我们会组织线上或线下的方向介绍会，帮助你在正式选择前充分了解每个方向。</span></div>
+            <div class="timeline-item"><b>入门小任务</b><span>在学长学姐的指导下完成一个小任务，让你实际体验该方向的工作内容。</span></div>
+            <div class="timeline-item"><b>正式入队 🎉</b><span>双向确认后，你就正式成为 LionHeart 的一员了！</span></div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;">
+        <p style="color: var(--muted); margin-bottom: 1.5rem;">在等待期间，你可以先浏览战队网站了解更多：</p>
+        <div class="hero-actions" style="justify-content: center;">
+            <a class="btn primary" href="{% url 'siteinfo:home' %}">返回首页</a>
+            <a class="btn" href="{% url 'content:robots' %}">了解机器人</a>
+            <a class="btn" href="{% url 'siteinfo:technical' %}">技术方向</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

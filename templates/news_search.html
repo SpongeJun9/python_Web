@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}搜索结果 - LionHeart{% endblock %}
+{% block content %}
+<section class="page-hero section">
+    <p class="eyebrow">Search Results</p>
+    <h1>搜索结果</h1>
+    {% if keyword %}
+    <p>关键词：<strong style="color: var(--color-primary);">{{ keyword }}</strong> - 找到 {{ articles.paginator.count }} 条结果</p>
+    {% else %}
+    <p>请输入搜索关键词</p>
+    {% endif %}
+</section>
+
+<!-- 搜索框 -->
+<section class="section" style="padding-top: 0;">
+    <form method="get" action="{% url 'content:news_search' %}" style="max-width: 600px; margin: 0 auto 2rem; display: flex; gap: 0.5rem;">
+        <input type="text" name="keyword" value="{{ keyword }}" placeholder="搜索新闻标题、内容、标签..." style="flex: 1; padding: 0.75rem; border: 1px solid var(--color-primary); border-radius: 4px; background: rgba(255,255,255,0.05); color: white; font-size: 1rem;">
+        <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">搜索</button>
+    </form>
+</section>
+
+<section class="section" style="padding-top: 0;">
+    {% if articles %}
+    <div class="news-list grid-news">
+        {% for article in articles %}
+        <a href="{% url 'content:news_detail' article.id %}">
+            {% if article.cover_image %}<img src="{{ article.cover_image.url }}" alt="{{ article.title }}">{% endif %}
+            <small>{{ article.get_category_display }} · {{ article.published_at|date:'Y-m-d' }} · {{ article.view_count }} 次阅读</small>
+            <strong>{{ article.title }}</strong>
+            <span>{{ article.summary|truncatechars:120 }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- 分页 -->
+    {% if articles.has_other_pages %}
+    <div style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 3rem;">
+        {% if articles.has_previous %}
+            <a href="?page=1&keyword={{ keyword }}" class="btn btn-outline" style="padding: 0.5rem 1rem;">首页</a>
+            <a href="?page={{ articles.previous_page_number }}&keyword={{ keyword }}" class="btn btn-outline" style="padding: 0.5rem 1rem;">上一页</a>
+        {% endif %}
+
+        <span style="padding: 0.5rem 1rem; color: var(--color-primary);">第 {{ articles.number }} / {{ articles.paginator.num_pages }} 页</span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}&keyword={{ keyword }}" class="btn btn-outline" style="padding: 0.5rem 1rem;">下一页</a>
+            <a href="?page={{ articles.paginator.num_pages }}&keyword={{ keyword }}" class="btn btn-outline" style="padding: 0.5rem 1rem;">末页</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% else %}
+    <div style="text-align: center; padding: 4rem 0; color: rgba(255,255,255,0.5);">
+        <p style="font-size: 1.2rem;">未找到相关新闻</p>
+        <p>试试其他关键词或<a href="{% url 'content:news' %}" style="color: var(--color-primary);">浏览全部新闻</a></p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

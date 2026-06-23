@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}LionHeart 机器人战队{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lionheart.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lionheart.js' %}" defer></script>
+</head>
+<body>
+    <div class="site-bg"></div>
+    <div id="siteSplash" class="site-splash" role="button" tabindex="0" aria-label="点击进入 LionHeart 官网">
+        <div class="splash-scan"></div>
+        <div class="splash-card">
+            <div class="splash-logo-lockup">
+                <div class="splash-logo-item">
+                    <img src="{% static '队徽、校徽、R矢量图/lionheart队徽.png' %}" alt="LionHeart 机器人战队队徽">
+                    <span>LionHeart<br>机器人战队</span>
+                </div>
+                <div class="splash-times">×</div>
+                <div class="splash-logo-item">
+                    <img src="{% static '队徽、校徽、R矢量图/学校校徽.png' %}" alt="重庆三峡科技大学校徽">
+                    <span>重庆三峡<br>科技大学</span>
+                </div>
+            </div>
+            <h2>LionHeart 机器人战队 × 重庆三峡科技大学</h2>
+            <p>点击进入官网</p>
+        </div>
+    </div>
+    <header class="topbar navbar navbar-default">
+        <a class="brand" href="{% url 'siteinfo:home' %}">
+            <span class="brand-logos">
+                <img class="brand-logo team" src="{% static '队徽、校徽、R矢量图/lionheart队徽.png' %}" alt="LionHeart 战队队徽">
+            </span>
+            <span>
+                <strong>LionHeart</strong>
+            </span>
+        </a>
+        <img class="nav-rm-logo" src="{% static '队徽、校徽、R矢量图/R标/白/RM英文字@4x.png' %}" alt="RoboMaster">
+        <button class="nav-toggle" type="button" aria-label="展开导航">☰</button>
+        <nav class="nav">
+            <a href="{% url 'siteinfo:home' %}">首页</a>
+            <a href="{% url 'siteinfo:about' %}">关于战队</a>
+            <a href="{% url 'siteinfo:robomaster' %}">RoboMaster</a>
+            <a href="{% url 'content:robots' %}">机器人阵容</a>
+            <a href="{% url 'siteinfo:technical' %}">技术方向</a>
+            <a href="{% url 'siteinfo:members' %}">成员组织</a>
+            <a href="{% url 'content:achievements' %}">赛事成果</a>
+            <a href="{% url 'content:news' %}">新闻动态</a>
+            <a class="nav-cta" href="{% url 'recruitment:recruitment' %}">加入我们</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="brand footer-brand">
+                    <span class="brand-logos">
+                        <img class="brand-logo team" src="{% static '队徽、校徽、R矢量图/lionheart队徽.png' %}" alt="LionHeart 战队队徽">
+                        <img class="brand-logo school" src="{% static '队徽、校徽、R矢量图/学校校徽.png' %}" alt="重庆三峡科技大学校徽">
+                    </span>
+                    <span><strong>LionHeart</strong><small>机器人战队</small></span>
+                </div>
+                <p>以工程点燃热爱，以技术守护荣耀。从实验室到赛场，让机器人真正跑起来。</p>
+            </div>
+            <div>
+                <h4>快速入口</h4>
+                <a href="{% url 'recruitment:recruitment' %}">招新报名</a>
+                <a href="{% url 'siteinfo:sponsor' %}">合作赞助</a>
+                <a href="{% url 'siteinfo:resources' %}">资源中心</a>
+                <a href="{% url 'siteinfo:contact' %}">联系我们</a>
+            </div>
+            <div>
+                <h4>建设方向</h4>
+                <img class="footer-rm-logo" src="{% static '队徽、校徽、R矢量图/R标/异形/RoboMaster异形字版logo.png' %}" alt="RoboMaster Logo">
+                <p>RoboMaster / 机器人研发 / 智能制造 / 工程实践 / 赛事运营</p>
+            </div>
+        </div>
+        <div class="copyright">© 2026 LionHeart Robot Team. Built with Django.</div>
+    </footer>
+</body>
+</html>
