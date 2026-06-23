@@ -76,16 +76,25 @@ DATABASES = {
 }
 
 # ============================
-# 生产环境使用 PostgreSQL（Railway 自动注入 DATABASE_URL）
+# 生产环境使用 PostgreSQL（优先检测 Railway 注入的环境变量）
 # ============================
 DATABASE_URL = os.getenv('DATABASE_URL', '')
-if DATABASE_URL:
+PGHOST = os.getenv('PGHOST', '')
+
+if DATABASE_URL or PGHOST:
     import dj_database_url
-    DATABASES['default'] = dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    if DATABASE_URL:
+        DATABASES['default'] = dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    else:
+        DATABASES['default'] = dj_database_url.config(
+            default=f"postgres://{os.getenv('PGUSER')}:{os.getenv('PGPASSWORD')}@{PGHOST}:{os.getenv('PGPORT','5432')}/{os.getenv('PGDATABASE')}",
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
